@@ -127,8 +127,8 @@ const offs=Math.floor(Math.random()*644)
   <>
       {
     load==true && <>
-    <div className="w-full flex justify-center items-center my-32">
-    <img src="Home/Load.png" className="w-54 h-54" />
+   <div className="w-full flex justify-center items-center my-36">
+    <img src="Home/Lock.png" className="w-72 h-72" />
     </div>
     </>
   }
@@ -148,7 +148,7 @@ const offs=Math.floor(Math.random()*644)
       placeholder="Type your Name..."
       className="w-full font-bold px-4 py-2 pr-10  rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
     />
-    <button onClick={add_Name} disabled={disable}>
+    <button className="bg-purple-800" onClick={add_Name} disabled={disable}>
     <FaPaperPlane  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-purple-500 text-xl"  />
     </button>
 </div>

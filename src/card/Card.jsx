@@ -160,8 +160,8 @@ const offs=Math.floor(Math.random()*644)
   <>
     {
     load==true && <>
-    <div className="w-full flex justify-center items-center my-32">
-    <img src="Home/Load.png" className="w-54 h-54" />
+      <div className="w-full flex justify-center items-center my-36">
+    <img src="Home/Lock.png" className="w-72 h-72" />
     </div>
     </>
   }
