@@ -17,6 +17,7 @@ const [image,setImage]=useState(null)
 const [mode,setMode]=useState(null)
 const [value,setValue]=useState(null)
 const [character,setCharacter]=useState(null)
+const [poke,setPoke]=useState([])
 const buttons=["attack","defence","speed","hp"]
 const [imp,setImp]=useState("")
 const [timer, setTimer] = useState(30);
@@ -135,6 +136,7 @@ const offs=Math.floor(Math.random()*644)
   }
   const choose=(i)=>{
     setImage(i.image)
+    setPoke(i)
     setToggle(true)
   }
   const final=(i)=>{
@@ -236,12 +238,12 @@ const offs=Math.floor(Math.random()*644)
   toggle==true && 
   <>
     <h1 className="text-center my-8 font-bold">Choose Mode of Power</h1>
-         <div className="w-full flex justify-center flex-row flex-wrap my-6 gap-x-12 gap-y-6">
+         <div className="w-full flex justify-center flex-row flex-wrap my-6 gap-x-4 gap-y-6">
     {buttons.map((i)=>{
       return(<>
   <button onClick={()=>final(i)} className="w-28 h-10 flex justify-center items-center bg-purple-800 rounded-lg text-white">{
     i[0].toUpperCase()+i.slice(1).toLowerCase()
-  }</button>
+  }-: {poke[i]}</button>
       </>)
     })}
     </div>
