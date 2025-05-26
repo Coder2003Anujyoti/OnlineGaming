@@ -44,7 +44,7 @@ const inactivityTimeout = useRef(null);
    window.scrollTo({ top: 0, behavior: "smooth" });
  },[])
  useEffect(() => {
-  socket = io('http://localhost:8000');
+  socket = io('https://cruel-ginger-apisjdjjd-e9ce50b1.koyeb.app/');
 
   socket.on('waiting', (message) => {
     setMsg(message);
