@@ -16,6 +16,7 @@ const [toggle,setToggle]=useState(false)
 const [image,setImage]=useState(null)
 const [mode,setMode]=useState(null)
 const [value,setValue]=useState(null)
+const [disable,setDisable]=useState(false)
 const [character,setCharacter]=useState(null)
 const buttons=["attack","defence","speed","hp"]
 const [imp,setImp]=useState("")
@@ -131,6 +132,7 @@ const offs=Math.floor(Math.random()*644)
   const add_Name=()=>{
     if(text.trim()!=''){
       socket.emit('joinCard',text)
+      setDisable(true)
     }
   }
   const choose=(i)=>{
@@ -179,7 +181,7 @@ const offs=Math.floor(Math.random()*644)
       placeholder="Type your Name..."
       className="w-full font-bold px-4 py-2 pr-10  rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
     />
-    <FaPaperPlane onClick={add_Name}  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-purple-500 text-xl" />
+    <FaPaperPlane onClick={add_Name}  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-purple-500 text-xl" disabled={disable} />
 </div>
 </div>
 </>

@@ -12,6 +12,7 @@ const [start,setStart]=useState(false)
 const [data,setData]=useState([])
 const [opt,setOpt]=useState(0)
 const [imp,setImp]=useState("")
+const [disable,setDisable]=useState(false)
 const buttons=[1,2,3,4,5,6]
 const inactivityTimeout = useRef(null);
 const countdownInterval = useRef(null);
@@ -95,6 +96,7 @@ useEffect(() => {
 const add_Name=()=>{
   if (text.trim()!='') {
     socket.emit('joinRoom', text);
+    setDisable(true)
     }
 }
 const optio=(i)=>{
@@ -146,7 +148,7 @@ const offs=Math.floor(Math.random()*644)
       placeholder="Type your Name..."
       className="w-full font-bold px-4 py-2 pr-10  rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
     />
-    <FaPaperPlane onClick={add_Name}  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-purple-500 text-xl" />
+    <FaPaperPlane onClick={add_Name}  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-purple-500 text-xl" disabled={disable} />
 </div>
 </div>
 </>

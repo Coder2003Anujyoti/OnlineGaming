@@ -13,6 +13,7 @@ const [data,setData]=useState([])
 const [choice,setChoice]=useState("")
 const [winner,setWinner]=useState("")
 const [imp,setImp]=useState("")
+const [disable,setDisable]=useState(false)
 const [timer, setTimer] = useState(20);
 const countdownInterval = useRef(null);
 const inactivityTimeout = useRef(null);
@@ -95,9 +96,8 @@ useEffect(() => {
 }, [start, msg]);
 const add_Name=()=>{
   if (text.trim()!='') {
-    
     socket.emit('joinGame', text);
-    
+    setDisable(true)
     }
 }
 const go_choice=(i)=>{
@@ -149,7 +149,7 @@ const offs=Math.floor(Math.random()*644)
       placeholder="Type your Name..."
       className="w-full font-bold px-4 py-2 pr-10  rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
     />
-    <FaPaperPlane onClick={add_Name}  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-purple-500 text-xl" />
+    <FaPaperPlane onClick={add_Name}  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-purple-500 text-xl" disabled={disable} />
 </div>
 </div>
 
