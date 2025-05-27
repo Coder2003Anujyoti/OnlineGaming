@@ -99,18 +99,18 @@ const offs=Math.floor(Math.random()*644)
   {
     load==true && <>
     <div className="w-full flex justify-center items-center my-36">
-    <img src="Home/Lock.png" className="w-72 h-72" />
+    <img src="Home/Lock.webp" className="w-72 h-72" />
     </div>
     </>
   }
   { load===false && <>
     <div className="w-full h-18 flex gap-x-6 bg-purple-800">
    <HashLink smooth to='/'>
-  <img src="Home/Loads.png" className="w-16 h-16 ml-2"/>
+  <img src="Home/Loads.webp" className="w-16 h-16 ml-2"/>
     </HashLink>
   </div>
 <div className="w-full flex flex-col gap-8 justify-center items-center  my-4">
-<img src="Home/About.png"  className="w-72 h-72 " />
+<img src="Home/About.webp"  className="w-72 h-72 " />
 </div>
 <div className="p-4  my-10">
       <div className="flex md:justify-center md:items-center overflow-x-auto text-center text-white font-bold gap-4 scroll-container">
@@ -158,7 +158,7 @@ const offs=Math.floor(Math.random()*644)
 <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
 <div>
 <div className="flex items-center space-x-3 flex-col mb-4">
-<img src="Home/Intro.png" className="w-54 h-36" alt="Angry Birds"  />
+<img src="Home/Intro.webp" className="w-54 h-36" alt="Angry Birds"  />
 </div>
 <p className="text-sm font-bold text-white">
 Online gaming is the act of playing video games over the internet, allowing players to connect and compete with others globally. It includes various genres such as battle royale, strategy, sports, and role-playing games. Online games can be played on consoles, computers, and mobile devices.They promote entertainment, teamwork, and communication skills, and have also led to the rise of eSports and game streaming.</p></div>

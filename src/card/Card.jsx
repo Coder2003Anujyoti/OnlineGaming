@@ -161,14 +161,14 @@ const offs=Math.floor(Math.random()*644)
     {
     load==true && <>
       <div className="w-full flex justify-center items-center my-36">
-    <img src="Home/Lock.png" className="w-72 h-72" />
+    <img src="Home/Lock.webp" className="w-72 h-72" />
     </div>
     </>
   }
   { load==false && <>
     <div className="w-full h-18 flex gap-x-6 bg-purple-800">
   <HashLink smooth to='/'>
-  <img src="Home/Loads.png"  className="w-16 h-16 ml-2"/>
+  <img src="Home/Loads.webp"  className="w-16 h-16 ml-2"/>
   </HashLink>
   </div>
   { start===false && <>
