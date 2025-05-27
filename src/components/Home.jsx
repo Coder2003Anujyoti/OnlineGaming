@@ -106,7 +106,8 @@ const offs=Math.floor(Math.random()*644)
   { load===false && <>
     <div className="w-full h-18 flex gap-x-6 bg-purple-800">
    <HashLink smooth to='/'>
-  <img src="Home/Loads.webp" className="w-16 h-16 ml-2"/>
+  <img src="Home/Loads.webp" onClick={()=>
+    window.location.reload()} className="w-16 h-16 ml-2"/>
     </HashLink>
   </div>
 <div className="w-full flex flex-col gap-8 justify-center items-center  my-4">
