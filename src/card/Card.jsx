@@ -20,6 +20,8 @@ const [disable,setDisable]=useState(false)
 const [character,setCharacter]=useState(null)
 const buttons=["attack","defence","speed","hp"]
 const [imp,setImp]=useState("")
+const [numb,setNumb]=useState(-1)
+const [it,setIt]=useState([])
 const [timer, setTimer] = useState(30);
 const countdownInterval = useRef(null);
 const inactivityTimeout = useRef(null);
@@ -51,9 +53,13 @@ const inactivityTimeout = useRef(null);
   const queryParams = new URLSearchParams(location.search);
   const datas = JSON.parse(decodeURIComponent(queryParams.get("data"))) || [];
   useEffect(() => {
-  socket = io('https://cruel-ginger-apisjdjjd-e9ce50b1.koyeb.app/');
+  socket = io('http://localhost:8000/');
   socket.on('waitCard',(mseg)=>{
     setMsg(mseg)
+  })
+  socket.on('loadCard',(mseg)=>{
+    setNumb(mseg.offs)
+    setMsg(mseg.msg)
   })
   socket.on('startCard',(msg)=>{
     setData(msg)
@@ -99,9 +105,9 @@ useEffect(() => {
     resetInactivityTimer();
   }
 }, [start, msg]);
-const go_items = async (it) => {
+const go_items = async () => {
   if (load === true) {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${it}&limit=6`);
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&&limit=12`);
     const datas = await res.json();
     const detailedPokemonData = datas.results.map(async (curPokemon) => {
       const res = await fetch(curPokemon.url);
@@ -116,19 +122,44 @@ const go_items = async (it) => {
       speed: i.stats[5].base_stat,
       hp: i.stats[0].base_stat
     }));
-    setItems([...newData]); 
+
     setTimeout(() => {
       setLoad(false);
     }, 1200);
+  }
+};
+const go_ites = async () => {
+  if (load === false) {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${numb}&&limit=6`);
+    const datas = await res.json();
+    const detailedPokemonData = datas.results.map(async (curPokemon) => {
+      const res = await fetch(curPokemon.url);
+      return await res.json();
+    });
+    const detailedResponses = await Promise.all(detailedPokemonData);
+    const newData = detailedResponses.map((i) => ({
+      name: i.name,
+      image: i.sprites.other.dream_world.front_default,
+      attack: i.stats[1].base_stat,
+      defence: i.stats[2].base_stat,
+      speed: i.stats[5].base_stat,
+      hp: i.stats[0].base_stat
+    }));
+    socket.emit('goCard',"Gooo")
+    setItems([...newData])
   }
 };
   useEffect(()=>{
    window.scrollTo({ top: 0, behavior: "smooth" });
  },[])
  useEffect(()=>{
-const offs=Math.floor(Math.random()*644)
-  go_items(offs);
+  go_items();
 },[])
+useEffect(()=>{
+if(numb!=-1){
+  go_ites();
+  }
+},[numb])
   const add_Name=()=>{
     if(text.trim()!=''){
       socket.emit('joinCard',text)
@@ -137,6 +168,7 @@ const offs=Math.floor(Math.random()*644)
   }
   const choose=(i)=>{
     setImage(i.image)
+    setIt(i)
     setToggle(true)
   }
   const final=(i)=>{
@@ -190,7 +222,7 @@ const offs=Math.floor(Math.random()*644)
 }
 { msg!="" &&
 <div className="my-44 text-center font-bold">
-<h1>Waiting for another player..... 
+<h1>{msg}
 </h1>
 </div>
 }
@@ -211,11 +243,7 @@ const offs=Math.floor(Math.random()*644)
 { i.image!==null && <img className="w-28 h-28" src={i.image} />}
 { i.character!="" && <h1 className="text-center font-bold">{i.character}</h1>
 }
-{ i.value !== -1 && i.choice != null && (
-  <h1 className="text-center font-bold">
-    {i.choice.charAt(0).toUpperCase() + i.choice.slice(1).toLowerCase()}-: {i.value}
-  </h1>
-)}
+
 <h1 className="text-center font-bold">{i.score}</h1>
         </div>
       </>)
@@ -245,6 +273,8 @@ const offs=Math.floor(Math.random()*644)
       return(<>
   <button onClick={()=>final(i)} className="w-28 h-10 flex justify-center items-center bg-purple-800 rounded-lg text-white">{
     i[0].toUpperCase()+i.slice(1).toLowerCase()
+  }-: {
+    it[i]
   }</button>
       </>)
     })}

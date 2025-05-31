@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const rooms={}
 const turn={}
 module.exports=(io,socket)=>{
-  socket.on('joinCard', (name) => {
+  socket.on('joinCard',(name) => {
     let assignedRoom=null;
     for(const roomID in rooms){
       if(rooms[roomID].length<2){
@@ -16,7 +16,7 @@ module.exports=(io,socket)=>{
     }
     rooms[assignedRoom].push({ id: socket.id, name, choice: null,score:0,image:null,value:-1,character:"",count:0});
     socket.join(assignedRoom);
-
+     socket.roomId = assignedRoom;
     console.log(`${name} joined room ${assignedRoom}`);
   if (rooms[assignedRoom].length === 1) {
       io.to(assignedRoom).emit('waitCard', 'Waiting for another player...');
@@ -24,17 +24,39 @@ module.exports=(io,socket)=>{
     if (rooms[assignedRoom].length === 2) {
       const players = rooms[assignedRoom];
        turn[assignedRoom]=Math.floor(Math.random()*2);
-       const result=""
-      io.to(assignedRoom).emit('startCard', {
-        roomId: assignedRoom,
-        players,
-        result:""
-      });
-       io.to(players[turn[assignedRoom]].id).emit('moveCard',"Your Turn")
-     io.to(players[(turn[assignedRoom]+1)%2].id).emit('moveCard',"Opposition Turn")
+       const offs=Math.floor(Math.random()*644)
+       io.to(assignedRoom).emit('loadCard',{
+         offs,
+         msg:"Cards are Loading...."
+       })
+    
     }
-    socket.roomId = assignedRoom;
   })
+  socket.on('goCard', (msg) => {
+  const roomID = socket.roomId;
+  const players = rooms[roomID];
+
+  // Defensive: check if room, players, and turn are properly set
+  if (!roomID || !Array.isArray(players) || players.length !== 2 || typeof turn[roomID] !== 'number') {
+    console.error("Invalid room or players for goCard", { roomID, players, turn: turn[roomID] });
+    return;
+  }
+
+  const result = "";
+  
+  io.to(roomID).emit('startCard', {
+    roomId: roomID,
+    players,
+    result: ""
+  });
+
+  const currentTurnIndex = turn[roomID];
+  const nextTurnIndex = (currentTurnIndex + 1) % 2;
+
+  io.to(players[currentTurnIndex].id).emit('moveCard', "Your Turn");
+  io.to(players[nextTurnIndex].id).emit('moveCard', "Opposition Turn");
+  socket.roomId = roomID;
+});
   socket.on('makeCard',(item)=>{
     const roomID = socket.roomId;
 const room = rooms[roomID];
