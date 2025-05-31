@@ -53,7 +53,7 @@ const inactivityTimeout = useRef(null);
   const queryParams = new URLSearchParams(location.search);
   const datas = JSON.parse(decodeURIComponent(queryParams.get("data"))) || [];
   useEffect(() => {
-  socket = io('http://localhost:8000/');
+  socket = io('https://cruel-ginger-apisjdjjd-e9ce50b1.koyeb.app/');
   socket.on('waitCard',(mseg)=>{
     setMsg(mseg)
   })
